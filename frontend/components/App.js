@@ -5,6 +5,25 @@ import MediaDisplay from './MediaDisplay';
 import Description from './Description';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import styled from 'styled-components';
+
+// Styled Components
+const AppContainer = styled.div`
+   text-align: center;
+   font-family: Arial, sans-serif;
+`;
+
+const DatePickerContainer = styled.div`
+   margin: 20px 0;
+`;
+
+const LoadingMessage = styled.h3`
+   color: #ff6347;
+`;
+
+const NoDataMessage = styled.p`
+   color: #ff4500;
+`;
 
 function App() {
   const [apodData, setApodData] = useState(null);
@@ -29,23 +48,23 @@ function App() {
   }, [date]);
 
   return (
-    <div className="App">
+    <AppContainer>
       <Header />
-      <div className="date-picker-container">
+      <DatePickerContainer>
         <h2>Select a Date:</h2>
         <DatePicker selected={date} onChange={date => setDate(date)} />
-      </div>
+      </DatePickerContainer>
       {loading ? (
-        <h3>Loading...</h3>
+        <LoadingMessage>Loading...</LoadingMessage>
       ) : apodData ? (
         <div>
           <MediaDisplay mediaUrl={apodData.url} mediaType={apodData.media_type} />
           <Description explanation={apodData.explanation} title={apodData.title} />
         </div>
       ) : (
-        <p>No data available for the selected date.</p>
+        <NoDataMessage>No data available for the selected date.</NoDataMessage>
       )}
-    </div>
+    </AppContainer>
   );
 }
 
